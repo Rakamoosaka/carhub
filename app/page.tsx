@@ -1,16 +1,17 @@
 import { fetchCars } from "@/utils";
-import { HomeProps } from "@/types";
+import { HomeProps, FilterProps } from "@/types";
 import { fuels, yearsOfProduction } from "@/constants";
 import { CarCard, ShowMore, SearchBar, CustomFilter, Hero } from "@/components";
 
-export default async function Home(props: HomeProps) {
-  const searchParams = await props.searchParams;
-  const allCars = await fetchCars({
-    manufacturer: searchParams.manufacturer || "",
-    year: Number(searchParams.year) || 2022,
-    fuel: searchParams.fuel || "",
-    model: searchParams.model || "",
-  });
+export default async function Home({ searchParams }: HomeProps) {
+  const filters: FilterProps = {
+    manufacturer: searchParams.manufacturer as string,
+    model: searchParams.model as string,
+    fuel: searchParams.fuel as string,
+    year: searchParams.year ? Number(searchParams.year) : 2022,
+  };
+
+  const allCars = await fetchCars(filters);
 
   const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
 
