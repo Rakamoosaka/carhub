@@ -38,7 +38,7 @@ export interface FilterProps {
 }
 
 export interface HomeProps {
-  searchParams: FilterProps;
+  searchParams?: { [key: string]: string | string[] | undefined };
 }
 
 export interface CarCardProps {
